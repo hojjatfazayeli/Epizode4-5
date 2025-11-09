@@ -14,6 +14,7 @@ class Product extends Model
         'time',
         'price',
         'pic_url',
-        'description'
+        'description',
+        'image'
     ];
 }

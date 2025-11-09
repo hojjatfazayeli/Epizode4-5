@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
-    public function store(Request $request)
+    public function store(ProductStoreRequest $productStoreRequest)
     {
-      $product =  Product::create($request->all());
-
+      $product =  Product::create($productStoreRequest->except('image'));
+      $product_image_url = Storage::putFile('/product' , $productStoreRequest->image);
+      $product->update(['image' => $product_image_url]);
+      $productInfo = Product::find($product->id);
       return response()->json(
           [
               "message" => "Product created",
-              "data" => $product
+              "data" => new ProductResource($productInfo)
           ],200
       );
     }

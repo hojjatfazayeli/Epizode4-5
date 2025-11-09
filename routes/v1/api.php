@@ -17,6 +17,9 @@ Route::post('/product/store',[\App\Http\Controllers\ProductController::class,'st
 Route::get('/product/{product}/show',[\App\Http\Controllers\ProductController::class,'show']);
 Route::put('/product/{product}/update',[\App\Http\Controllers\ProductController::class,'update']);
 Route::delete('/product/{product}/destroy',[\App\Http\Controllers\ProductController::class,'destroy']);
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+Route::post('/admin/store',[\App\Http\Controllers\AdminController::class,'store']);
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::get('/admin/{admin}/show',[\App\Http\Controllers\AdminController::class,'show']);
+
+});
